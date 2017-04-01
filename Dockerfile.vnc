@@ -1,0 +1,33 @@
+FROM debian:jessie
+MAINTAINER Jonathan Gerlach <jonathan@thegerlach.net>
+
+RUN apt-get update
+RUN yes | apt-get install libsdl1.2debian
+RUN yes | apt-get install libgtk2.0-0
+RUN yes | apt-get install libsdl-image1.2
+RUN yes | apt-get install libglu1-mesa
+RUN yes | apt-get install libsdl-ttf2.0-0
+RUN yes | apt-get install tightvncserver
+RUN yes | apt-get install --no-install-recommends xauth x11-apps
+
+COPY df_linux /opt/dwarfFortress
+
+RUN groupadd dorf && useradd -m -g dorf dorf
+RUN chown -R dorf /opt/dwarfFortress
+USER dorf
+
+ENV USER=dorf
+
+RUN mkdir ~/.vnc && echo password | vncpasswd -f > ~/.vnc/passwd
+RUN chmod 0600 ~/.vnc/passwd
+RUN echo "/opt/dwarfFortress/df" > ~/.vnc/xstartup
+
+WORKDIR /opt/dwarfFortress
+
+ENV DISPLAY=localhost:1
+
+EXPOSE 5901
+
+VOLUME /opt/dwarfFortress/data/save
+
+CMD vncserver :1 -geometry 1280x800 -depth 24 && /opt/dwarfFortress/df

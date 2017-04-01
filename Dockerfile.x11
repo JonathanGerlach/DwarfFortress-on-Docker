@@ -1,0 +1,15 @@
+FROM debian:jessie
+MAINTAINER Jonathan Gerlach <jonathan@thegerlach.net>
+
+RUN apt-get update
+RUN yes | apt-get install libsdl1.2debian
+RUN yes | apt-get install libgtk2.0-0
+RUN yes | apt-get install libsdl-image1.2
+RUN yes | apt-get install libglu1-mesa
+RUN yes | apt-get install libsdl-ttf2.0-0
+
+COPY df_linux /opt/dwarfFortress
+
+VOLUME /opt/dwarfFortress/data/save
+
+CMD /opt/dwarfFortress/df
