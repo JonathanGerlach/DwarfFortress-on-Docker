@@ -1,13 +1,13 @@
 vnc:
     #build: .
-    image: jonathangerlach/dwarffortress_vnc:43.05
+    image: jonathangerlach/dwarffortress_vnc:44.12
     ports:
         - "5901:5901"
     volumes:
         - $HOME/DwarfFortressSaves:/opt/dwarfFortress/data/save
 x11:
     #build: .
-    image: jonathangerlach/dwarffortress_x11:43.05
+    image: jonathangerlach/dwarffortress_x11:44.12
     environment:
         DISPLAY: $DISPLAY
     volumes:
